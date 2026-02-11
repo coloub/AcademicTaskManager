@@ -1,0 +1,174 @@
+@page "/tasks/edit/{TaskId:int}"
+@using AcademicTaskManager.Data
+@using AcademicTaskManager.Services
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@attribute [Authorize]
+@inject ProjectService ProjectService
+@inject TaskService TaskService
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
+
+<PageTitle>Editar Tarea</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (isLoading)
+            {
+                <div class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            }
+            else if (task == null || !isOwner)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    No tienes permiso para editar esta tarea o la tarea no existe.
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="bi bi-pencil me-2"></i>Editar Tarea
+                        </h3>
+                        @if (task.Project != null)
+                        {
+                            <small>Proyecto: @task.Project.Title</small>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="@task" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título de la Tarea <span class="text-danger">*</span></label>
+                                <InputText id="title" class="form-control" @bind-Value="task.Title" />
+                                <ValidationMessage For="@(() => task.Title)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripción</label>
+                                <InputTextArea id="description" class="form-control" @bind-Value="task.Description" rows="4" />
+                                <ValidationMessage For="@(() => task.Description)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="dueDate" class="form-label">Fecha de Vencimiento <span class="text-danger">*</span></label>
+                                <InputDate id="dueDate" class="form-control" @bind-Value="task.DueDate" />
+                                <ValidationMessage For="@(() => task.DueDate)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Estado</label>
+                                <InputSelect id="status" class="form-select" @bind-Value="task.Status">
+                                    <option value="@ProjectTaskStatus.Pending">Pendiente</option>
+                                    <option value="@ProjectTaskStatus.Completed">Completada</option>
+                                </InputSelect>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>@errorMessage
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(successMessage))
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    <i class="bi bi-check-circle me-2"></i>@successMessage
+                                </div>
+                            }
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                    @if (isSubmitting)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                        <span>Guardando...</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-save me-1"></i>
+                                        <span>Guardar Cambios</span>
+                                    }
+                                </button>
+                                <a href="/projects/@task.ProjectId" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-1"></i>Volver al Proyecto
+                                </a>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int TaskId { get; set; }
+
+    private ProjectTask? task;
+    private bool isLoading = true;
+    private bool isSubmitting = false;
+    private bool isOwner = false;
+    private string? errorMessage;
+    private string? successMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTask();
+    }
+
+    private async Task LoadTask()
+    {
+        isLoading = true;
+        task = await TaskService.GetTaskByIdAsync(TaskId);
+
+        if (task?.Project != null)
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            isOwner = task.Project.OwnerUserId == userId;
+        }
+
+        isLoading = false;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var success = await TaskService.UpdateTaskAsync(task!);
+            if (success)
+            {
+                successMessage = "Tarea actualizada exitosamente.";
+                await Task.Delay(1500);
+                Navigation.NavigateTo($"/projects/{task!.ProjectId}");
+            }
+            else
+            {
+                errorMessage = "No se pudo actualizar la tarea.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al actualizar la tarea: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+}

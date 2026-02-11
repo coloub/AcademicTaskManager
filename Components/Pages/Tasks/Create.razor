@@ -1,0 +1,158 @@
+@page "/tasks/create/{ProjectId:int}"
+@using AcademicTaskManager.Data
+@using AcademicTaskManager.Services
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@attribute [Authorize]
+@inject ProjectService ProjectService
+@inject TaskService TaskService
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
+
+<PageTitle>Crear Tarea</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (isLoading)
+            {
+                <div class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            }
+            else if (project == null || !isOwner)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    No tienes permiso para agregar tareas a este proyecto.
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="bi bi-plus-circle me-2"></i>Nueva Tarea
+                        </h3>
+                        <small>Proyecto: @project.Title</small>
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="@task" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título de la Tarea <span class="text-danger">*</span></label>
+                                <InputText id="title" class="form-control" @bind-Value="task.Title" 
+                                          placeholder="Ej: Diseñar diagrama ER" />
+                                <ValidationMessage For="@(() => task.Title)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripción</label>
+                                <InputTextArea id="description" class="form-control" @bind-Value="task.Description" rows="4" 
+                                              placeholder="Describe los detalles de la tarea..." />
+                                <ValidationMessage For="@(() => task.Description)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="dueDate" class="form-label">Fecha de Vencimiento <span class="text-danger">*</span></label>
+                                <InputDate id="dueDate" class="form-control" @bind-Value="task.DueDate" />
+                                <ValidationMessage For="@(() => task.DueDate)" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Estado</label>
+                                <InputSelect id="status" class="form-select" @bind-Value="task.Status">
+                                    <option value="@ProjectTaskStatus.Pending">Pendiente</option>
+                                    <option value="@ProjectTaskStatus.Completed">Completada</option>
+                                </InputSelect>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>@errorMessage
+                                </div>
+                            }
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                    @if (isSubmitting)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                        <span>Creando...</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-save me-1"></i>
+                                        <span>Crear Tarea</span>
+                                    }
+                                </button>
+                                <a href="/projects/@ProjectId" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                                </a>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    private Project? project;
+    private ProjectTask task = new ProjectTask();
+    private bool isLoading = true;
+    private bool isSubmitting = false;
+    private bool isOwner = false;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProject();
+        task.ProjectId = ProjectId;
+        task.DueDate = DateTime.Now.AddDays(7);
+    }
+
+    private async Task LoadProject()
+    {
+        isLoading = true;
+        project = await ProjectService.GetProjectByIdAsync(ProjectId);
+
+        if (project != null)
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            isOwner = project.OwnerUserId == userId;
+        }
+
+        isLoading = false;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+
+        try
+        {
+            await TaskService.CreateTaskAsync(task);
+            Navigation.NavigateTo($"/projects/{ProjectId}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al crear la tarea: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+}

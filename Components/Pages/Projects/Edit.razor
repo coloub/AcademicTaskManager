@@ -1,0 +1,165 @@
+@page "/projects/edit/{ProjectId:int}"
+@using AcademicTaskManager.Data
+@using AcademicTaskManager.Services
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@attribute [Authorize]
+@inject ProjectService ProjectService
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
+
+<PageTitle>Editar Proyecto</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (isLoading)
+            {
+                <div class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            }
+            else if (project == null || !isOwner)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    No tienes permiso para editar este proyecto o el proyecto no existe.
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="bi bi-pencil me-2"></i>Editar Proyecto
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="@project" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
+
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título del Proyecto <span
+                                    class="text-danger">*</span></label>
+                                    <InputText id="title" class="form-control" @bind-Value="project.Title" />
+                                    <ValidationMessage For="@(() => project.Title)" class="text-danger" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Descripción <span
+                                        class="text-danger">*</span></label>
+                                        <InputTextArea id="description" class="form-control" @bind-Value="project.Description"
+                                                       rows="5" />
+                                        <ValidationMessage For="@(() => project.Description)" class="text-danger" />
+                                        <div class="form-text">@project.Description.Length / 2000 caracteres</div>
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(errorMessage))
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            <i class="bi bi-exclamation-triangle me-2"></i>@errorMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(successMessage))
+                                    {
+                                        <div class="alert alert-success" role="alert">
+                                            <i class="bi bi-check-circle me-2"></i>@successMessage
+                                        </div>
+                                    }
+
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                            @if (isSubmitting)
+                                            {
+                                                <span class="spinner-border spinner-border-sm me-1" role="status"
+                                                      aria-hidden="true"></span>
+                                                <span>Guardando...</span>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-save me-1"></i>
+                                                <span>Guardar Cambios</span>
+                                            }
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" @onclick="CancelEdit">
+                                            <i class="bi bi-arrow-left me-1"></i>Volver
+                                        </button>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+@code {
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    private Project? project;
+    private bool isLoading = true;
+    private bool isSubmitting = false;
+    private bool isOwner = false;
+    private string? errorMessage;
+    private string? successMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProject();
+    }
+
+    private async Task LoadProject()
+    {
+        isLoading = true;
+        project = await ProjectService.GetProjectByIdAsync(ProjectId);
+
+        if (project != null)
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            isOwner = project.OwnerUserId == userId;
+        }
+
+        isLoading = false;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var success = await ProjectService.UpdateProjectAsync(project!);
+            if (success)
+            {
+                successMessage = "Proyecto actualizado exitosamente.";
+                await Task.Delay(1500);
+                Navigation.NavigateTo($"/projects/{ProjectId}");
+            }
+            else
+            {
+                errorMessage = "No se pudo actualizar el proyecto.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al actualizar el proyecto: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void CancelEdit()
+    {
+        Navigation.NavigateTo($"/projects/{ProjectId}");
+    }
+}

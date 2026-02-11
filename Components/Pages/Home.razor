@@ -1,0 +1,99 @@
+﻿@page "/"
+
+<PageTitle>Academic Task Manager</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-lg-10">
+            <div class="hero-section mb-5">
+                <h1 class="display-3 fw-bold text-primary mb-3">
+                    <i class="bi bi-clipboard-check me-3"></i>Academic Task Manager
+                </h1>
+                <p class="lead text-muted mb-4">
+                    Organiza tus proyectos académicos y tareas de manera eficiente
+                </p>
+
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="/projects" class="btn btn-primary btn-lg me-2">
+                            <i class="bi bi-folder me-2"></i>Mis Proyectos
+                        </a>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="/Account/Register" class="btn btn-primary btn-lg me-2">
+                            <i class="bi bi-person-plus me-2"></i>Crear Cuenta
+                        </a>
+                        <a href="/Account/Login" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+
+            <div class="row mt-5 g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto"
+                                 style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-folder-plus" style="font-size: 2rem;"></i>
+                            </div>
+                            <h4 class="fw-bold">Gestión de Proyectos</h4>
+                            <p class="text-muted">
+                                Crea y organiza todos tus proyectos académicos en un solo lugar
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-success bg-gradient text-white rounded-circle mb-3 mx-auto"
+                                 style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-list-check" style="font-size: 2rem;"></i>
+                            </div>
+                            <h4 class="fw-bold">Control de Tareas</h4>
+                            <p class="text-muted">
+                                Administra tareas con fechas límite y estados de progreso
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-info bg-gradient text-white rounded-circle mb-3 mx-auto"
+                                 style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-graph-up" style="font-size: 2rem;"></i>
+                            </div>
+                            <h4 class="fw-bold">Seguimiento Visual</h4>
+                            <p class="text-muted">
+                                Visualiza el progreso de tus proyectos en tiempo real
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <AuthorizeView>
+                <NotAuthorized>
+                    <div class="mt-5 p-4 bg-light rounded">
+                        <h3 class="mb-3">¿Nuevo en Academic Task Manager?</h3>
+                        <p class="text-muted mb-0">
+                            Crea una cuenta gratuita y comienza a organizar tus proyectos académicos hoy mismo.
+                            Mantén un seguimiento completo de todas tus tareas y fechas límite.
+                        </p>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        padding: 3rem 0;
+    }
+</style>

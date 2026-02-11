@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcademicTaskManager.Data;
 
-/// <summary>
-/// Representa un proyecto académico
-/// </summary>
 public class Project
 {
     public int Id { get; set; }
@@ -22,9 +19,6 @@ public class Project
     [Required]
     public string OwnerUserId { get; set; } = string.Empty;
 
-    // Relación con ApplicationUser
     public ApplicationUser? Owner { get; set; }
-
-    // Relación con Tasks
     public ICollection<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
 }

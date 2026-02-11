@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcademicTaskManager.Data;
 
-/// <summary>
-/// Representa una tarea dentro de un proyecto
-/// </summary>
 public class ProjectTask
 {
     public int Id { get; set; }
@@ -24,13 +21,9 @@ public class ProjectTask
     [Required]
     public int ProjectId { get; set; }
 
-    // Relación con Project
     public Project? Project { get; set; }
 }
 
-/// <summary>
-/// Estados posibles para una tarea
-/// </summary>
 public enum ProjectTaskStatus
 {
     Pending = 0,

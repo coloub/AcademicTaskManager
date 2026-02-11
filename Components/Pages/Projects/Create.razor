@@ -55,7 +55,7 @@
                         }
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary" disabled="@isSubmitting" @onclick="OnButtonClick">
+                            <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
                                 @if (isSubmitting)
                                 {
                                     <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
@@ -83,64 +83,36 @@
     private bool isSubmitting = false;
     private string? errorMessage;
     private string? successMessage;
-    private bool isInitialized = false;
-    
-    [Inject]
-    private ILogger<Create> Logger { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        Logger.LogInformation("=== OnInitializedAsync ===");
         try
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             
-            Logger.LogInformation($"UserId en OnInitialized: {userId}");
-            
             if (!string.IsNullOrEmpty(userId))
             {
                 project.OwnerUserId = userId;
-                isInitialized = true;
-                Logger.LogInformation("UserId asignado correctamente");
             }
             else
             {
                 errorMessage = "No se pudo identificar al usuario. Por favor, inicia sesión nuevamente.";
-                Logger.LogWarning("UserId es null o vacío en OnInitialized");
             }
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Error en OnInitializedAsync");
             errorMessage = $"Error al inicializar: {ex.Message}";
         }
     }
 
-    private void OnButtonClick()
-    {
-        Logger.LogInformation("=== BOTÓN CLICKEADO ===");
-        Logger.LogInformation($"Título actual: '{project.Title}'");
-        Logger.LogInformation($"Descripción actual: '{project.Description}'");
-        Logger.LogInformation($"OwnerUserId actual: '{project.OwnerUserId}'");
-    }
-
     private void HandleInvalidSubmit()
     {
-        Logger.LogWarning("=== FORMULARIO INVÁLIDO ===");
-        Logger.LogWarning($"Título: '{project.Title}' - Vacío: {string.IsNullOrEmpty(project.Title)}");
-        Logger.LogWarning($"Descripción: '{project.Description}' - Vacío: {string.IsNullOrEmpty(project.Description)}");
-        Logger.LogWarning($"OwnerUserId: '{project.OwnerUserId}' - Vacío: {string.IsNullOrEmpty(project.OwnerUserId)}");
         errorMessage = "Por favor completa todos los campos requeridos.";
     }
 
     private async Task HandleValidSubmit()
     {
-        Logger.LogInformation("=== INICIO HandleValidSubmit ===");
-        Logger.LogInformation($"Título: {project.Title}");
-        Logger.LogInformation($"Descripción: {project.Description}");
-        Logger.LogInformation($"OwnerUserId: {project.OwnerUserId}");
-        
         isSubmitting = true;
         errorMessage = null;
         successMessage = null;
@@ -150,29 +122,21 @@
             if (string.IsNullOrEmpty(project.OwnerUserId))
             {
                 errorMessage = "No se pudo identificar al usuario.";
-                Logger.LogWarning("OwnerUserId es null o vacío en HandleValidSubmit");
                 return;
             }
 
-            Logger.LogInformation("Llamando a CreateProjectAsync...");
             var createdProject = await ProjectService.CreateProjectAsync(project);
-            Logger.LogInformation($"Proyecto creado exitosamente con ID: {createdProject.Id}");
-            
             successMessage = "¡Proyecto creado exitosamente!";
-            await Task.Delay(1000);
-            
-            Logger.LogInformation("Navegando a /projects");
+            await Task.Delay(500);
             Navigation.NavigateTo("/projects", forceLoad: true);
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Error al crear el proyecto");
             errorMessage = $"Error al crear el proyecto: {ex.Message}";
         }
         finally
         {
             isSubmitting = false;
-            Logger.LogInformation("=== FIN HandleValidSubmit ===");
         }
     }
 

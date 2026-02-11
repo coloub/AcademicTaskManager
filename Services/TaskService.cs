@@ -3,9 +3,6 @@ using AcademicTaskManager.Data;
 
 namespace AcademicTaskManager.Services;
 
-/// <summary>
-/// Servicio para manejar operaciones CRUD de tareas
-/// </summary>
 public class TaskService
 {
     private readonly ApplicationDbContext _context;
@@ -15,9 +12,6 @@ public class TaskService
         _context = context;
     }
 
-    /// <summary>
-    /// Obtiene todas las tareas de un proyecto específico
-    /// </summary>
     public async Task<List<ProjectTask>> GetProjectTasksAsync(int projectId)
     {
         return await _context.Tasks
@@ -26,9 +20,6 @@ public class TaskService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Obtiene una tarea por ID
-    /// </summary>
     public async Task<ProjectTask?> GetTaskByIdAsync(int taskId)
     {
         return await _context.Tasks
@@ -36,9 +27,6 @@ public class TaskService
             .FirstOrDefaultAsync(t => t.Id == taskId);
     }
 
-    /// <summary>
-    /// Crea una nueva tarea
-    /// </summary>
     public async Task<ProjectTask> CreateTaskAsync(ProjectTask task)
     {
         _context.Tasks.Add(task);
@@ -46,9 +34,6 @@ public class TaskService
         return task;
     }
 
-    /// <summary>
-    /// Actualiza una tarea existente
-    /// </summary>
     public async Task<bool> UpdateTaskAsync(ProjectTask task)
     {
         var existingTask = await _context.Tasks.FindAsync(task.Id);
@@ -64,9 +49,6 @@ public class TaskService
         return true;
     }
 
-    /// <summary>
-    /// Elimina una tarea
-    /// </summary>
     public async Task<bool> DeleteTaskAsync(int taskId)
     {
         var task = await _context.Tasks.FindAsync(taskId);
@@ -78,9 +60,6 @@ public class TaskService
         return true;
     }
 
-    /// <summary>
-    /// Marca una tarea como completada
-    /// </summary>
     public async Task<bool> MarkTaskAsCompletedAsync(int taskId)
     {
         var task = await _context.Tasks.FindAsync(taskId);
@@ -92,9 +71,6 @@ public class TaskService
         return true;
     }
 
-    /// <summary>
-    /// Marca una tarea como pendiente
-    /// </summary>
     public async Task<bool> MarkTaskAsPendingAsync(int taskId)
     {
         var task = await _context.Tasks.FindAsync(taskId);
@@ -106,18 +82,12 @@ public class TaskService
         return true;
     }
 
-    /// <summary>
-    /// Verifica si una tarea pertenece a un proyecto específico
-    /// </summary>
     public async Task<bool> TaskBelongsToProjectAsync(int taskId, int projectId)
     {
         var task = await _context.Tasks.FindAsync(taskId);
         return task?.ProjectId == projectId;
     }
 
-    /// <summary>
-    /// Obtiene las tareas próximas a vencer (en los próximos 7 días)
-    /// </summary>
     public async Task<List<ProjectTask>> GetUpcomingTasksAsync(int projectId, int days = 7)
     {
         var deadline = DateTime.Now.AddDays(days);
@@ -130,9 +100,6 @@ public class TaskService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Obtiene las tareas vencidas de un proyecto
-    /// </summary>
     public async Task<List<ProjectTask>> GetOverdueTasksAsync(int projectId)
     {
         return await _context.Tasks

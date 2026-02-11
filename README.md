@@ -50,8 +50,8 @@
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/academic-task-manager.git
-cd academic-task-manager/AcademicTaskManager
+git clone https://github.com/coloub/AcademicTaskManager.git
+cd AcademicTaskManager
 ```
 
 ### 2. Restaurar Dependencias
@@ -178,7 +178,7 @@ Las contribuciones son bienvenidas. Por favor:
 
 ## 🐛 Reportar Bugs
 
-Si encuentras un bug, por favor abre un [issue](https://github.com/tu-usuario/academic-task-manager/issues) con:
+Si encuentras un bug, por favor abre un [issue](https://github.com/coloub/AcademicTaskManager/issues) con:
 
 - Descripción detallada del problema
 - Pasos para reproducir
@@ -192,8 +192,15 @@ Este proyecto es software educativo desarrollado como proyecto académico.
 
 ## 👥 Autores
 
-- **Desarrollador Principal** - Equipo CSE 325
-- **Colaborador IA** - Ana Torres
+**Proyecto Académico CSC325 - Spring 2026**
+
+- Jose Mendoza - Lead Developer
+- Ana Torres - Developer
+
+**Enlaces del Proyecto:**
+
+- GitHub: https://github.com/coloub/AcademicTaskManager
+- Trello: https://trello.com/b/6973b0d61f7cded0464bd5e6/academic-task-manager-cse-325
 
 ## 🙏 Agradecimientos
 
@@ -208,7 +215,7 @@ Este proyecto es software educativo desarrollado como proyecto académico.
 
 - 📖 Lee la [Guía del Usuario](USER_GUIDE.md)
 - 💻 Consulta las [Notas del Desarrollador](DEVELOPER_NOTES.md)
-- 🐛 Reporta un [issue](https://github.com/tu-usuario/academic-task-manager/issues)
+- 🐛 Reporta un [issue](https://github.com/coloub/AcademicTaskManager/issues)
 
 ---
 

@@ -4,14 +4,8 @@ using AcademicTaskManager.Data;
 
 namespace AcademicTaskManager.Services;
 
-/// <summary>
-/// Servicio para inicializar la base de datos con datos de prueba
-/// </summary>
 public static class DbInitializer
 {
-    /// <summary>
-    /// Inicializa la base de datos con un usuario de prueba y datos de ejemplo
-    /// </summary>
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();

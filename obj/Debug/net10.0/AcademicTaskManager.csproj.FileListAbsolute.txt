@@ -215,3 +215,4 @@ D:\CSE 325 MyProjects\Project\AcademicTaskManager\obj\Debug\net10.0\AcademicTask
 D:\CSE 325 MyProjects\Project\AcademicTaskManager\obj\Debug\net10.0\AcademicTaskManager.genruntimeconfig.cache
 D:\CSE 325 MyProjects\Project\AcademicTaskManager\obj\Debug\net10.0\ref\AcademicTaskManager.dll
 D:\CSE 325 MyProjects\Project\AcademicTaskManager\bin\Debug\net10.0\Data\app.db
+D:\CSE 325 MyProjects\Project\AcademicTaskManager\obj\Debug\net10.0\AcademicTaskManager.sourcelink.json

@@ -9,10 +9,11 @@
 **Base de Datos:** SQLite con Entity Framework Core  
 **Autenticación:** ASP.NET Core Identity  
 **Fecha de Implementación:** 10 de Febrero de 2026  
+**Curso:** CSC325 - Software Engineering  
 **Equipo de Desarrollo:**
 
-- Desarrollador Humano
-- Ana Torres (Colaborador IA)
+- Jose Mendoza
+- Ana Torres
 
 ### 2. ARCHIVOS CREADOS
 

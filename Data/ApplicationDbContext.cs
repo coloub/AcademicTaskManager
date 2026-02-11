@@ -12,21 +12,18 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(builder);
 
-        // Configurar relación Project -> ApplicationUser
         builder.Entity<Project>()
             .HasOne(p => p.Owner)
             .WithMany()
             .HasForeignKey(p => p.OwnerUserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Configurar relación ProjectTask -> Project
         builder.Entity<ProjectTask>()
             .HasOne(t => t.Project)
             .WithMany(p => p.Tasks)
             .HasForeignKey(t => t.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Índices para mejorar rendimiento
         builder.Entity<Project>()
             .HasIndex(p => p.OwnerUserId);
 

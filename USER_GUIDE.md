@@ -1,336 +1,336 @@
-# Guía del Usuario - Academic Task Manager
+# User Guide - Academic Task Manager
 
-## Bienvenido a Academic Task Manager
+## Welcome to Academic Task Manager
 
-Academic Task Manager es una aplicación diseñada para ayudar a los estudiantes a organizar sus proyectos académicos y las tareas asociadas de manera eficiente.
+Academic Task Manager is an application designed to help students organize their academic projects and associated tasks efficiently.
 
-## Tabla de Contenidos
+## Table of Contents
 
-1. [Primeros Pasos](#primeros-pasos)
-2. [Registro e Inicio de Sesión](#registro-e-inicio-de-sesión)
-3. [Gestión de Proyectos](#gestión-de-proyectos)
-4. [Gestión de Tareas](#gestión-de-tareas)
-5. [Preguntas Frecuentes](#preguntas-frecuentes)
-
----
-
-## Primeros Pasos
-
-### Acceder a la Aplicación
-
-1. Abra su navegador web
-2. Navegue a la URL de la aplicación (ej: `http://localhost:5034`)
-3. Ver á la página de inicio con información sobre el sistema
-
-### Página de Inicio
-
-La página de inicio muestra:
-
-- **Descripción del sistema** - Qué puede hacer con Academic Task Manager
-- **Características principales** - Gestión de proyectos, control de tareas, seguimiento visual
-- **Botones de acción** - Crear cuenta o Iniciar sesión
+1. [Getting Started](#getting-started)
+2. [Registration and Login](#registration-and-login)
+3. [Project Management](#project-management)
+4. [Task Management](#task-management)
+5. [Frequently Asked Questions](#frequently-asked-questions)
 
 ---
 
-## Registro e Inicio de Sesión
+## Getting Started
 
-### Crear una Nueva Cuenta
+### Accessing the Application
 
-1. **Haga clic en "Crear Cuenta"** en la página de inicio
-2. **Complete el formulario de registro:**
-   - Email: Su dirección de correo electrónico
-   - Contraseña: Mínimo 6 caracteres, debe incluir:
-     - Al menos una letra mayúscula
-     - Al menos una letra minúscula
-     - Al menos un número
-     - Al menos un carácter especial
-3. **Confirme su contraseña**
-4. **Haga clic en "Registrar"**
-5. En modo desarrollo, su cuenta se confirma automáticamente
+1. Open your web browser
+2. Navigate to the application URL (e.g., `http://localhost:5034`)
+3. View the home page with system information
 
-**Ejemplo de contraseña válida:** `Test123!`
+### Home Page
 
-### Iniciar Sesión
+The home page displays:
 
-1. **Haga clic en "Iniciar Sesión"** en la página de inicio
-2. **Ingrese sus credenciales:**
+- **System description** - What you can accomplish with Academic Task Manager
+- **Key features** - Project management, task control, visual tracking
+- **Action buttons** - Create account or Login
+
+---
+
+## Registration and Login
+
+### Creating a New Account
+
+1. **Click "Create Account"** on the home page
+2. **Complete the registration form:**
+   - Email: Your email address
+   - Password: Minimum 6 characters, must include:
+     - At least one uppercase letter
+     - At least one lowercase letter
+     - At least one number
+     - At least one special character
+3. **Confirm your password**
+4. **Click "Register"**
+5. In development mode, your account is automatically confirmed
+
+**Valid password example:** `Test123!`
+
+### Logging In
+
+1. **Click "Login"** on the home page
+2. **Enter your credentials:**
    - Email
-   - Contraseña
-3. **Opcionalmente**, marque "Recordarme" para mantener la sesión activa
-4. **Haga clic en "Iniciar Sesión"**
+   - Password
+3. **Optionally**, check "Remember me" to maintain an active session
+4. **Click "Login"**
 
-### Cerrar Sesión
+### Logging Out
 
-1. Haga clic en su nombre de usuario en el menú de navegación
-2. Seleccione "Cerrar Sesión"
-
----
-
-## Gestión de Proyectos
-
-### Ver Todos sus Proyectos
-
-1. **Después de iniciar sesión**, haga clic en "Mis Proyectos" en el menú de navegación
-2. Verá una lista de tarjetas con todos sus proyectos
-3. Cada tarjeta muestra:
-   - Título del proyecto
-   - Descripción (primeros 100 caracteres)
-   - Fecha de creación
-   - Número de tareas totales y completadas
-
-### Crear un Nuevo Proyecto
-
-1. **En la página "Mis Proyectos"**, haga clic en "Nuevo Proyecto"
-2. **Complete el formulario:**
-   - **Título** (obligatorio): Nombre descriptivo del proyecto
-     - Máximo 200 caracteres
-     - Ejemplo: "Proyecto Final de Bases de Datos"
-   - **Descripción** (obligatoria): Detalles del proyecto
-     - Máximo 2000 caracteres
-     - Incluya objetivos, requisitos, alcance
-3. **Haga clic en "Crear Proyecto"**
-4. Será redirigido automáticamente a la lista de proyectos
-
-**Consejos:**
-
-- Sea específico en el título para identificar fácilmente el proyecto
-- En la descripción, incluya toda la información relevante que necesitará consultar
-
-### Ver Detalles de un Proyecto
-
-1. **En la lista de proyectos**, haga clic en el botón "Ver" de cualquier proyecto
-2. La pantalla de detalles muestra:
-
-   **Información del Proyecto:**
-   - Título completo
-   - Descripción completa
-   - Fecha de creación
-
-   **Estadísticas en Tarjetas de Colores:**
-   - 🔵 **Total de Tareas** - Número total de tareas
-   - 🟢 **Completadas** - Tareas finalizadas
-   - 🟡 **Pendientes** - Tareas por hacer
-   - 🔴 **Vencidas** - Tareas pendientes cuya fecha límite ya pasó
-
-   **Barra de Progreso:**
-   - Muestra visualmente el porcentaje de completitud
-   - Indica cuántas tareas se han completado del total
-
-   **Lista de Tareas:**
-   - Tabla con todas las tareas del proyecto
-   - Columnas: Checkbox, Título, Fecha Límite, Estado, Acciones
-   - Las tareas vencidas se resaltan en rojo
-
-### Editar un Proyecto
-
-1. **Desde la lista de proyectos**: Haga clic en el botón de lápiz (Editar)
-
-   **O**
-
-   **Desde los detalles del proyecto**: Haga clic en "Editar"
-
-2. **Modifique** el título y/o la descripción
-3. **Haga clic en "Guardar Cambios"**
-4. Verá un mensaje de confirmación
-
-**Nota:** Solo puede editar sus propios proyectos
-
-### Eliminar un Proyecto
-
-⚠️ **ADVERTENCIA:** Esta acción eliminará también TODAS las tareas del proyecto y NO se puede deshacer.
-
-1. **En la lista de proyectos**, haga clic en el botón de papelera (Eliminar)
-2. **Aparecerá un cuadro de confirmación**:
-   - Revise el nombre del proyecto
-   - Lea la advertencia
-3. **Haga clic en "Eliminar"** para confirmar
-
-   **O**
-
-   **Haga clic en "Cancelar"** para abortar la operación
+1. Click your username in the navigation menu
+2. Select "Logout"
 
 ---
 
-## Gestión de Tareas
+## Project Management
 
-### Crear una Nueva Tarea
+### Viewing All Your Projects
 
-1. **Navegue a los detalles del proyecto** donde desea crear la tarea
-2. **Haga clic en "Nueva Tarea"**
-3. **Complete el formulario:**
-   - **Título** (obligatorio): Nombre de la tarea
-     - Máximo 200 caracteres
-     - Ejemplo: "Diseñar diagrama ER"
-   - **Descripción** (opcional): Detalles adicionales
-     - Máximo 2000 caracteres
-   - **Fecha de Vencimiento** (obligatoria): Cuándo debe estar lista
-     - Use el selector de fecha
-     - Por defecto: 7 días desde hoy
-   - **Estado**: Pendiente o Completada
-     - Por defecto: Pendiente
-4. **Haga clic en "Crear Tarea"**
-5. Volverá a la página de detalles del proyecto con la nueva tarea
+1. **After logging in**, click "My Projects" in the navigation menu
+2. You will see card-based list of all your projects
+3. Each card displays:
+   - Project title
+   - Description (first 100 characters)
+   - Creation date
+   - Number of total and completed tasks
 
-**Ejemplo de Tarea:**
+### Creating a New Project
+
+1. **On the "My Projects" page**, click "New Project"
+2. **Complete the form:**
+   - **Title** (required): Descriptive project name
+     - Maximum 200 characters
+     - Example: "Database Systems Final Project"
+   - **Description** (required): Project details
+     - Maximum 2000 characters
+     - Include objectives, requirements, scope
+3. **Click "Create Project"**
+4. You will be automatically redirected to the project list
+
+**Tips:**
+
+- Be specific in the title for easy project identification
+- In the description, include all relevant information you will need to reference
+
+### Viewing Project Details
+
+1. **In the project list**, click the "View" button on any project
+2. The details screen shows:
+
+   **Project Information:**
+   - Complete title
+   - Full description
+   - Creation date
+
+   **Color-Coded Statistics Cards:**
+   - 🔵 **Total Tasks** - Total number of tasks
+   - 🟢 **Completed** - Finished tasks
+   - 🟡 **Pending** - Tasks to be done
+   - 🔴 **Overdue** - Pending tasks past their due date
+
+   **Progress Bar:**
+   - Visually displays completion percentage
+   - Indicates how many tasks have been completed out of total
+
+   **Task List:**
+   - Table with all project tasks
+   - Columns: Checkbox, Title, Due Date, Status, Actions
+   - Overdue tasks are highlighted in red
+
+### Editing a Project
+
+1. **From the project list**: Click the pencil button (Edit)
+
+   **OR**
+
+   **From project details**: Click "Edit"
+
+2. **Modify** the title and/or description
+3. **Click "Save Changes"**
+4. You will see a confirmation message
+
+**Note:** You can only edit your own projects
+
+### Deleting a Project
+
+⚠️ **WARNING:** This action will also delete ALL project tasks and CANNOT be undone.
+
+1. **In the project list**, click the trash button (Delete)
+2. **A confirmation dialog will appear**:
+   - Review the project name
+   - Read the warning
+3. **Click "Delete"** to confirm
+
+   **OR**
+
+   **Click "Cancel"** to abort the operation
+
+---
+
+## Task Management
+
+### Creating a New Task
+
+1. **Navigate to the project details** where you want to create the task
+2. **Click "New Task"**
+3. **Complete the form:**
+   - **Title** (required): Task name
+     - Maximum 200 characters
+     - Example: "Design ER diagram"
+   - **Description** (optional): Additional details
+     - Maximum 2000 characters
+   - **Due Date** (required): When it should be completed
+     - Use the date picker
+     - Default: 7 days from today
+   - **Status**: Pending or Completed
+     - Default: Pending
+4. **Click "Create Task"**
+5. You will return to the project details page with the new task
+
+**Task Example:**
 
 ```
-Título: Implementar modelos de datos
-Descripción: Crear las clases de modelo en C# usando EF Core con todas las anotaciones necesarias.
-Fecha: 15/02/2026
-Estado: Pendiente
+Title: Implement data models
+Description: Create model classes in C# using EF Core with all necessary annotations.
+Date: 02/15/2026
+Status: Pending
 ```
 
-### Marcar una Tarea como Completada/Pendiente
+### Marking a Task as Completed/Pending
 
-En la tabla de tareas del proyecto:
+In the project task table:
 
-1. **Haga clic en el checkbox** al inicio de la fila
-2. El estado cambiará automáticamente:
-   - ✅ **Marcado** = Completada (badge verde)
-   - ☐ **Desmarcado** = Pendiente (badge amarillo)
-3. Las estadísticas del proyecto se actualizarán automáticamente
+1. **Click the checkbox** at the beginning of the row
+2. The status will change automatically:
+   - ✅ **Checked** = Completed (green badge)
+   - ☐ **Unchecked** = Pending (yellow badge)
+3. Project statistics will update automatically
 
-**Método rápido para cambiar múltiples tareas:**
+**Quick method to change multiple tasks:**
 
-- Simplemente haga clic en cada checkbox que desee cambiar
-- Los cambios se aplican inmediatamente
+- Simply click each checkbox you wish to change
+- Changes apply immediately
 
-### Editar una Tarea
+### Editing a Task
 
-1. **En la tabla de tareas**, haga clic en el botón de lápiz (Editar)
-2. **Modifique** cualquier campo:
-   - Título
-   - Descripción
-   - Fecha de vencimiento
-   - Estado
-3. **Haga clic en "Guardar Cambios"**
-4. **O haga clic en "Volver al Proyecto"** para cancelar
+1. **In the task table**, click the pencil button (Edit)
+2. **Modify** any field:
+   - Title
+   - Description
+   - Due date
+   - Status
+3. **Click "Save Changes"**
+4. **Or click "Return to Project"** to cancel
 
-### Eliminar una Tarea
+### Deleting a Task
 
-1. **En la tabla de tareas**, haga clic en el botón de papelera (Eliminar)
-2. **Aparecerá un cuadro de confirmación**
-3. **Haga clic en "Eliminar"** para confirmar
+1. **In the task table**, click the trash button (Delete)
+2. **A confirmation dialog will appear**
+3. **Click "Delete"** to confirm
 
-   **O**
+   **OR**
 
-   **Haga clic en "Cancelar"** para abortar
+   **Click "Cancel"** to abort
 
-### Interpretar Tareas Vencidas
+### Interpreting Overdue Tasks
 
-Las tareas vencidas se identifican por:
+Overdue tasks are identified by:
 
-- **Fila con fondo rojo** en la tabla
-- **Texto en rojo** en la fecha
-- **Ícono de advertencia** ⚠️ con "Vencida"
+- **Red background row** in the table
+- **Red text** in the date
+- **Warning icon** ⚠️ with "Overdue"
 
-**Qué hacer con tareas vencidas:**
+**What to do with overdue tasks:**
 
-1. Si ya la completó: Marque el checkbox para cambiar a Completada
-2. Si aún está pendiente: Considere actualizar la fecha límite
-3. Priorice estas tareas en su trabajo
+1. If already completed: Check the checkbox to change to Completed
+2. If still pending: Consider updating the due date
+3. Prioritize these tasks in your work
 
 ---
 
-## Preguntas Frecuentes
+## Frequently Asked Questions
 
-### ¿Puedo compartir un proyecto con otros usuarios?
+### Can I share a project with other users?
 
-**No.** Actualmente, cada proyecto pertenece a un solo usuario. Esta funcionalidad podría agregarse en futuras versiones.
+**No.** Currently, each project belongs to a single user. This functionality may be added in future versions.
 
-### ¿Cuántos proyectos puedo crear?
+### How many projects can I create?
 
-**Sin límite.** Puede crear tantos proyectos como necesite para organizar su trabajo académico.
+**Unlimited.** You can create as many projects as needed to organize your academic work.
 
-### ¿Qué pasa si olvido mi contraseña?
+### What if I forget my password?
 
-Haga clic en "¿Olvidó su contraseña?" en la página de inicio de sesión y siga las instrucciones (requiere configuración de email en producción).
+Click "Forgot your password?" on the login page and follow the instructions (requires email configuration in production).
 
-### ¿Puedo cambiar mi email o contraseña?
+### Can I change my email or password?
 
-Sí. Haga clic en su nombre en el menú de navegación para acceder a la gestión de cuenta.
+Yes. Click your name in the navigation menu to access account management.
 
-### ¿Los datos se guardan automáticamente?
+### Are data saved automatically?
 
-Sí. Todos los cambios se guardan inmediatamente en la base de datos cuando hace clic en botones como "Crear", "Guardar", o los checkboxes.
+Yes. All changes are saved immediately to the database when you click buttons like "Create", "Save", or checkbox toggles.
 
-### ¿Puedo usar la aplicación en mi teléfono?
+### Can I use the application on my phone?
 
-Sí. La aplicación es totalmente responsiva y funciona en dispositivos móviles, tablets y computadoras de escritorio.
+Yes. The application is fully responsive and works on mobile devices, tablets, and desktop computers.
 
-### ¿Qué navegadores son compatibles?
+### What browsers are supported?
 
-La aplicación funciona en:
+The application works in:
 
-- Chrome (recomendado)
+- Chrome (recommended)
 - Edge
 - Firefox
 - Safari
 - Opera
 
-### ¿Puedo exportar mis proyectos?
+### Can I export my projects?
 
-Esta funcionalidad no está disponible actualmente, pero está planeada para futuras versiones.
+This functionality is not currently available, but is planned for future versions.
 
-### ¿Cómo organizo mejor mis proyectos?
+### How can I better organize my projects?
 
-**Mejores prácticas:**
+**Best practices:**
 
-1. Use un proyecto por asignatura o trabajo importante
-2. Divida el proyecto en tareas pequeñas y manejables
-3. sea realista con las fechas límite
-4. Revise sus proyectos regularmente
-5. Marque las tareas como completadas inmediatamente
-6. Use la descripción para documentar detalles importantes
+1. Use one project per subject or major assignment
+2. Divide the project into small, manageable tasks
+3. Be realistic with due dates
+4. Review your projects regularly
+5. Mark tasks as completed immediately
+6. Use the description to document important details
 
-### ¿Qué hago si encuentro un error?
+### What do I do if I encounter an error?
 
-Si encuentra un problema:
+If you encounter a problem:
 
-1. Refresque la página (F5)
-2. Intente cerrar sesión e iniciar sesión nuevamente
-3. Contacte al soporte técnico con detalles del error
-
----
-
-## Consejos para Usar Academic Task Manager Efectivamente
-
-### 📝 Planificación de Proyectos
-
-- **Cree el proyecto tan pronto como reciba la asignación**
-- **Lea todos los requisitos** antes de crear tareas
-- **Divida trabajos grandes** en tareas pequeñas (2-4 horas cada una)
-
-### 📅 Gestión de Fechas
-
-- **Agregue buffer de tiempo** - No ponga la fecha exacta de entrega
-- **Revise tareas próximas** regularmente (cada 2-3 días)
-- **Priorice tareas vencidas** inmediatamente
-
-### ✅ Seguimiento de Progreso
-
-- **Marque tareas completadas** inmediatamente
-- **Revise el porcentaje de completitud** para mantener el ritmo
-- **Celebre pequeños logros** cuando complete tareas
-
-### 📊 Uso de Estadísticas
-
-- **Use la barra de progreso** como motivación
-- **Atienda las tareas vencidas** mostradas en rojo
-- **Mantenga un balance** entre pendientes y completadas
+1. Refresh the page (F5)
+2. Try logging out and logging back in
+3. Contact technical support with error details
 
 ---
 
-## Soporte y Ayuda
+## Tips for Using Academic Task Manager Effectively
 
-¿Necesita más ayuda?
+### Project Planning
 
-- Consulte la documentación técnica en `IMPLEMENTACION.md`
-- Consulte las notas del desarrollador en `DEVELOPER_NOTES.md`
-- Contacte al administrador del sistema
+- **Create the project as soon as you receive the assignment**
+- **Read all requirements** before creating tasks
+- **Divide large assignments** into small tasks (2-4 hours each)
+
+### Date Management
+
+- **Add time buffer** - Don't use the exact deadline
+- **Review upcoming tasks** regularly (every 2-3 days)
+- **Prioritize overdue tasks** immediately
+
+### Progress Tracking
+
+- **Mark completed tasks** immediately
+- **Review completion percentage** to maintain pace
+- **Celebrate small achievements** when completing tasks
+
+### Using Statistics
+
+- **Use the progress bar** as motivation
+- **Address overdue tasks** shown in red
+- **Maintain a balance** between pending and completed
 
 ---
 
-**Versión del documento:** 1.0  
-**Fecha:** 10 de Febrero de 2026  
-**Aplicación:** Academic Task Manager v1.0
+## Support and Help
+
+Need more help?
+
+- Review technical documentation in `IMPLEMENTACION.md`
+- Consult developer notes in `DEVELOPER_NOTES.md`
+- Contact system administrator
+
+---
+
+**Document version:** 1.0  
+**Date:** February 10, 2026  
+**Application:** Academic Task Manager v1.0

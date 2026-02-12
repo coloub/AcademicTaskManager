@@ -1,8 +1,8 @@
-# Academic Task Manager - Documentación Completa
+# Academic Task Manager - Implementation Report
 
-## REPORTE DE IMPLEMENTACIÓN
+## IMPLEMENTATION DOCUMENTATION
 
-### 1. INFORMACIÓN GENERAL
+### 1. GENERAL INFORMATION
 
 **Nombre del Proyecto:** Academic Task Manager  
 **Tecnología:** Blazor Server (.NET 10.0)  
@@ -54,60 +54,60 @@ itar proyecto existente
 
 #### Componentes de Layout (`Components/Layout/`)
 
-- `NavMenu.razor` - Menú de navegación actualizado
-- `MainLayout.razor` - Layout principal (template)
+- `NavMenu.razor` - Updated navigation menu
+- `MainLayout.razor` - Main layout (template)
 
-#### Configuración y Scripts
+#### Configuration and Scripts
 
-- `Program.cs` - Configuración de servicios y middleware
-- `run-app.ps1` - Script PowerShell para ejecutar la aplicación
-- `appsettings.json` - Configuración con connection string SQLite
-- `AcademicTaskManager.csproj` - Archivo de proyecto .NET
+- `Program.cs` - Service and middleware configuration
+- `run-app.ps1` - PowerShell script to run application
+- `appsettings.json` - Configuration with SQLite connection string
+- `AcademicTaskManager.csproj` - .NET project file
 
-#### Migraciones (`Migrations/`)
+#### Migrations (`Migrations/`)
 
-- `20260210225235_InitialCreate.cs` - Migración inicial (tablas Project y Tasks)
-- Designer files para migraciones
+- `20260210225235_InitialCreate.cs` - Initial migration (Project and Tasks tables)
+- Designer files for migrations
 
-### 3. PAQUETES NUGET AGREGADOS
+### 3. ADDED NUGET PACKAGES
 
 ```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
 ```
 
-**Paquetes incluidos en el template:**
+**Packages included in template:**
 
 - Microsoft.AspNetCore.Identity.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Tools
 - Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
-### 4. RUTAS CREADAS
+### 4. CREATED ROUTES
 
-| Ruta                        | Descripción           | Requiere Auth |
-| --------------------------- | --------------------- | ------------- |
-| `/`                         | Página de inicio      | No            |
-| `/projects`                 | Lista de proyectos    | Sí            |
-| `/projects/create`          | Crear nuevo proyecto  | Sí            |
-| `/projects/{id}`            | Detalles del proyecto | Sí            |
-| `/projects/edit/{id}`       | Editar proyecto       | Sí            |
-| `/tasks/create/{projectId}` | Crear tarea           | Sí            |
-| `/tasks/edit/{id}`          | Editar tarea          | Sí            |
-| `/Account/*`                | Páginas de Identity   | Varía         |
+| Route                       | Description        | Requires Auth |
+| --------------------------- | ------------------ | ------------- |
+| `/`                         | Home page          | No            |
+| `/projects`                 | Project list       | Yes           |
+| `/projects/create`          | Create new project | Yes           |
+| `/projects/{id}`            | Project details    | Yes           |
+| `/projects/edit/{id}`       | Edit project       | Yes           |
+| `/tasks/create/{projectId}` | Create task        | Yes           |
+| `/tasks/edit/{id}`          | Edit task          | Yes           |
+| `/Account/*`                | Identity pages     | Varies        |
 
-### 5. MODELO DE DATOS
+### 5. DATA MODEL
 
-#### Tabla: Projects
+#### Table: Projects
 
 ```
 - Id (int, PK)
 - Title (string, required, max 200)
 - Description (string, required, max 2000)
 - CreatedDate (DateTime)
-- OwnerUserId (string, FK a AspNetUsers)
+- OwnerUserId (string, FK to AspNetUsers)
 - Tasks (navigation property)
 ```
 
-#### Tabla: Tasks
+#### Table: Tasks
 
 ```
 - Id (int, PK)
@@ -115,26 +115,26 @@ itar proyecto existente
 - Description (string, max 2000)
 - DueDate (DateTime, required)
 - Status (enum: Pending=0, Completed=1)
-- ProjectId (int, FK a Projects)
+- ProjectId (int, FK to Projects)
 - Project (navigation property)
 ```
 
-#### Relaciones
+#### Relationships
 
 - User (1) → Projects (N)
 - Project (1) → Tasks (N)
-- Cascade delete configurado
+- Cascade delete configured
 
-### 6. CÓMO EJECUTAR LA APLICACIÓN
+### 6. HOW TO RUN THE APPLICATION
 
-#### Método 1: Usando el Script PowerShell
+#### Method 1: Using PowerShell Script
 
 ```powershell
 cd "D:\CSE 325 MyProjects\Project\AcademicTaskManager"
 .\run-app.ps1
 ```
 
-#### Método 2: Comandos Manuales
+#### Method 2: Manual Commands
 
 ```powershell
 cd "D:\CSE 325 MyProjects\Project\AcademicTaskManager"
@@ -142,95 +142,95 @@ dotnet ef database update
 dotnet run
 ```
 
-#### Método 3: Desde Visual Studio
+#### Method 3: From Visual Studio
 
-1. Abrir `Project.sln` en Visual Studio
-2. Establecer `AcademicTaskManager` como proyecto de inicio
-3. Presionar F5 o hacer clic en "Run"
+1. Open `AcademicTaskManager.sln` in Visual Studio
+2. Set `AcademicTaskManager` as startup project
+3. Press F5 or click "Run"
 
-**URL de la aplicación:** http://localhost:5034 (puerto puede variar)
+**Application URL:** http://localhost:5034 (port may vary)
 
-### 7. CÓMO PROBAR LA AUTENTICACIÓN
+### 7. HOW TO TEST AUTHENTICATION
 
-#### Crear Usuario de Prueba:
+#### Create Test User:
 
-1. Iniciar la aplicación
-2. Navegar a `/Account/Register`
-3. Completar el formulario de registro:
-   - Email: `estudiante@academic.com`
+1. Start the application
+2. Navigate to `/Account/Register`
+3. Complete registration form:
+   - Email: `student@academic.com`
    - Password: `Test123!`
-4. Confirmar el email (en desarrollo se auto-confirma)
-5. Iniciar sesión con las credenciales creadas
+4. Confirm email (auto-confirmed in development)
+5. Login with created credentials
 
-#### Flujo de Autenticación:
+#### Authentication Flow:
 
-- ✅ Usuarios no autenticados pueden ver la página de inicio
-- ❌ Usuarios no autenticados NO pueden acceder a `/projects`
-- ✅ Después de login, pueden crear y gestionar proyectos y tareas
-- ✅ Los usuarios solo ven sus propios proyectos
-- ✅ Los usuarios solo pueden editar/eliminar sus propios proyectos
+- ✅ Unauthenticated users can view home page
+- ❌ Unauthenticated users CANNOT access `/projects`
+- ✅ After login, can create and manage projects and tasks
+- ✅ Users only see their own projects
+- ✅ Users can only edit/delete their own projects
 
-### 8. FUNCIONALIDADES IMPLEMENTADAS
+### 8. IMPLEMENTED FUNCTIONALITIES
 
-#### ✅ Gestión de Proyectos
+#### ✅ Project Management
 
-- Crear proyecto con título y descripción
-- Ver lista de todos los proyectos del usuario autenticado
-- Ver detalles de un proyecto con todas sus tareas
-- Editar información del proyecto
-- Eliminar proyecto (con confirmación)
-- Mostrar estadísticas del proyecto
-  - Total de tareas
-  - Tareas completadas
-  - Tareas pendientes
-  - Tareas vencidas
-  - Porcentaje de completitud
+- Create project with title and description
+- View list of all authenticated user's projects
+- View project details with all tasks
+- Edit project information
+- Delete project (with confirmation)
+- Display project statistics
+  - Total tasks
+  - Completed tasks
+  - Pending tasks
+  - Overdue tasks
+  - Completion percentage
 
-#### ✅ Gestión de Tareas
+#### ✅ Task Management
 
-- Crear tarea dentro de un proyecto
-- Ver todas las tareas de un proyecto
-- Editar tarea (título, descripción, fecha, estado)
-- Eliminar tarea (con confirmación)
-- Cambiar estado con checkbox (Pendiente ↔ Completada)
-- Resaltar tareas vencidas en rojo
-- Ordenar tareas por fecha de vencimiento
+- Create task within a project
+- View all tasks of a project
+- Edit task (title, description, date, status)
+- Delete task (with confirmation)
+- Change status with checkbox (Pending ↔ Completed)
+- Highlight overdue tasks in red
+- Sort tasks by due date
 
-#### ✅ Seguridad y Autorización
+#### ✅ Security and Authorization
 
-- Registro de usuarios con validación de contraseña
+- User registration with password validation
 - Login/Logout
-- Restricción de acceso solo a usuarios autenticados
-- Cada usuario solo ve sus propios proyectos
-- Validación de propiedad antes de editar/eliminar
+- Access restriction to authenticated users only
+- Each user only sees their own projects
+- Ownership validation before edit/delete
 
 #### ✅ UI/UX
 
-- Diseño responsivo (Bootstrap 5)
-- Iconos Bootstrap Icons
-- Indicadores visuales (badges, colores)
-- Mensajes de confirmación para eliminaciones
-- Feedback visual de carga
-- Navegación clara e intuitiva
-- Accesibilidad (labels, semantic HTML)
+- Responsive design (Bootstrap 5)
+- Bootstrap Icons
+- Visual indicators (badges, colors)
+- Confirmation messages for deletions
+- Visual loading feedback
+- Clear and intuitive navigation
+- Accessibility (labels, semantic HTML)
 
-### 9. ASUNCIONES Y DECISIONES DE DISEÑO
+### 9. ASSUMPTIONS AND DESIGN DECISIONS
 
-#### Asunciones:
+#### Assumptions:
 
-1. **SQLite para desarrollo**: Se usa SQLite por simplicidad, pero es fácil cambiar a SQL Server para producción
-2. **Confirmación de email**: En desarrollo se auto-confirma, en producción requeriría servicio SMTP
-3. **Un usuario por proyecto**: Cada proyecto pertenece a un solo usuario (no hay colaboración multi-usuario)
-4. **Fechas en zona horaria local**: No se implementó manejo de zonas horarias
-5. **Sin paginación**: Se asume que cada usuario no tendrá cientos de proyectos
+1. **SQLite for development**: SQLite used for simplicity, but easily changed to SQL Server for production
+2. **Email confirmation**: Auto-confirmed in development, would require SMTP service in production
+3. **Single user per project**: Each project belongs to one user (no multi-user collaboration)
+4. **Dates in local timezone**: Timezone handling not implemented
+5. **No pagination**: Assumes each user won't have hundreds of projects
 
-#### Decisiones de Diseño:
+#### Design Decisions:
 
-1. **Enum ProjectTaskStatus**: Se renombró `TaskStatus` a `ProjectTaskStatus` para evitar conflicto con `System.Threading.Tasks.TaskStatus`
-2. **Cascade Delete**: Al eliminar un proyecto, se eliminan automáticamente todas sus tareas
-3. **Blazor Server vs WebAssembly**: Se eligió Blazor Server por menor complejidad inicial y mejor SEO
-4. **Servicios dedicados**: Se crearon `ProjectService` y `TaskService` para separar lógica de negocio de la UI
-5. **Validaciones**: Se usan Data Annotations en los modelos y validación automática de Blazor
+1. **Enum ProjectTaskStatus**: Renamed `TaskStatus` to `ProjectTaskStatus` to avoid conflict with `System.Threading.Tasks.TaskStatus`
+2. **Cascade Delete**: When deleting a project, all its tasks are automatically deleted
+3. **Blazor Server vs WebAssembly**: Chose Blazor Server for lower initial complexity and better SEO
+4. **Dedicated services**: Created `ProjectService` and `TaskService` to separate business logic from UI
+5. **Validations**: Use Data Annotations in models and Blazor's automatic validation
 
 ### 10. MEJORAS FUTURAS SUGERIDAS
 
@@ -274,19 +274,19 @@ dotnet run
 **Error:** Error de parsing en caracteres con tilde  
 **Solución:** Evitar caracteres especiales en strings de PowerShell
 
-### 12. ESTRUCTURA DEL PROYECTO
+### 12. PROJECT STRUCTURE
 
 ```
 AcademicTaskManager/
 ├── Components/
-│   ├── Account/          # Páginas de Identity
-│   ├── Layout/           # Layouts y navegación
-│   └── Pages/           # Páginas Razor
-│       ├── Projects/     # CRUD de proyectos
-│       ├── Tasks/        # CRUD de tareas
+│   ├── Account/          # Identity pages
+│   ├── Layout/           # Layouts and navigation
+│   └── Pages/           # Razor pages
+│       ├── Projects/     # Project CRUD
+│       ├── Tasks/        # Task CRUD
 │       └── Home.razor
 ├── Data/
-│   ├── Migrations/       # Migraciones EF Core
+│   ├── Migrations/       # EF Core migrations
 │   ├── ApplicationDbContext.cs
 │   ├── ApplicationUser.cs
 │   ├── Project.cs
@@ -295,44 +295,44 @@ AcademicTaskManager/
 │   ├── DbInitializer.cs
 │   ├── ProjectService.cs
 │   └── TaskService.cs
-├── wwwroot/             # Archivos estáticos
-├── Program.cs           # Configuración de la app
-├── appsettings.json     # Configuración
-├── run-app.ps1          # Script de ejecución
+├── wwwroot/             # Static files
+├── Program.cs           # App configuration
+├── appsettings.json     # Configuration
+├── run-app.ps1          # Execution script
 └── AcademicTaskManager.csproj
 ```
 
-### 13. VERIFICACIÓN DE REQUISITOS
+### 13. REQUIREMENTS VERIFICATION
 
-| Requisito             | Estado | Notas                        |
+| Requirement           | Status | Notes                        |
 | --------------------- | ------ | ---------------------------- |
-| .NET 8+               | ✅     | Usando .NET 10               |
-| Blazor Server         | ✅     | Template oficial de .NET     |
-| Entity Framework Core | ✅     | Versión 10.0.3               |
-| SQLite                | ✅     | Con migrations code-first    |
-| ASP.NET Core Identity | ✅     | Registro, login, logout      |
-| CRUD Proyectos        | ✅     | Create, Read, Update, Delete |
-| CRUD Tareas           | ✅     | Create, Read, Update, Delete |
-| Autenticación         | ✅     | Requerida para proyectos     |
-| Autorización          | ✅     | Solo dueño modifica          |
-| UI Responsiva         | ✅     | Bootstrap 5                  |
-| Navegación clara      | ✅     | NavMenu actualizado          |
-| Accesibilidad         | ✅     | Labels, semantic HTML        |
-| Async/Await           | ✅     | En todos los servicios       |
-| Dependency Injection  | ✅     | Servicios registrados        |
-| Migraciones           | ✅     | Code-first approach          |
-| Datos de prueba       | ⚠️     | Script disponible (opcional) |
+| .NET 8+               | ✅     | Using .NET 10                |
+| Blazor Server         | ✅     | Official .NET template       |
+| Entity Framework Core | ✅     | Version 10.0.3               |
+| SQLite                | ✅     | With code-first migrations   |
+| ASP.NET Core Identity | ✅     | Register, login, logout      |
+| Projects CRUD         | ✅     | Create, Read, Update, Delete |
+| Tasks CRUD            | ✅     | Create, Read, Update, Delete |
+| Authentication        | ✅     | Required for projects        |
+| Authorization         | ✅     | Only owner can modify        |
+| Responsive UI         | ✅     | Bootstrap 5                  |
+| Clear navigation      | ✅     | Updated NavMenu              |
+| Accessibility         | ✅     | Labels, semantic HTML        |
+| Async/Await           | ✅     | In all services              |
+| Dependency Injection  | ✅     | Services registered          |
+| Migrations            | ✅     | Code-first approach          |
+| Test data             | ⚠️     | Script available (optional)  |
 
-**Leyenda:** ✅ Completado | ⚠️ Parcial | ❌ No completado
+**Legend:** ✅ Completed | ⚠️ Partial | ❌ Not completed
 
-### 14. CONCLUSIÓN
+### 14. CONCLUSION
 
-El proyecto **Academic Task Manager** ha sido implementado exitosamente cumpliendo todos los requisitos funcionales y técnicos especificados. La aplicación está lista para ser desplegada y utilizada por estudiantes para gestionar sus proyectos académicos de manera eficiente.
+The **Academic Task Manager** project has been successfully implemented fulfilling all specified functional and technical requirements. The application is ready to be deployed and used by students to efficiently manage their academic projects.
 
-**Estado final:** ✅ LISTO PARA PRODUCCIÓN
+**Final status:** ✅ READY FOR PRODUCTION
 
 ---
 
-**Documento generado el:** 10 de Febrero de 2026  
-**Versión:** 1.0  
-**Última actualización:** 10/02/2026 19:00
+**Document generated on:** February 10, 2026  
+**Version:** 1.0  
+**Last update:** 02/10/2026 19:00

@@ -1,147 +1,184 @@
-# 📚 Academic Task Manager
+# Academic Task Manager
 
-> Sistema de gestión de proyectos académicos y tareas para estudiantes
+> Academic project and task management system for university students
 
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
 [![Blazor](https://img.shields.io/badge/Blazor-Server-512BD4)](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 [![Entity Framework](https://img.shields.io/badge/EF%20Core-10.0-512BD4)](https://docs.microsoft.com/ef/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57)](https://www.sqlite.org/)
 
-## 🚀 Características Principales
+## Course Context
 
-- ✅ **Gestión de Proyectos Académicos** - Crea, edita y elimina proyectos
-- ✅ **Control de Tareas** - Administra tareas con fechas límite y estados
-- ✅ **Seguimiento de Progreso** - Visualiza estadísticas y porcentaje de completitud
-- ✅ **Autenticación Segura** - Sistema de usuarios con ASP.NET Core Identity
-- ✅ **Interfaz Responsiva** - Funciona en desktop, tablet y móvil
-- ✅ **Tiempo Real** - Actualizaciones instantáneas con SignalR
+**CSC325 – .NET Software Development**  
+Spring 2026 Academic Project
 
-## 📸 Screenshots
+## Project Description
 
-### Página de Inicio
+Academic Task Manager is a full-stack web application built with Blazor Server and .NET 10 that enables students to organize academic projects and track associated tasks. The system implements complete CRUD operations, authentication with ASP.NET Core Identity, and real-time updates through SignalR. The application follows a service layer architecture pattern with Entity Framework Core for data persistence in SQLite.
+
+## Key Features
+
+- **Academic Project Management** - Create, edit, and delete projects with validation
+- **Task Control** - Manage tasks with due dates, statuses, and completion tracking
+- **Progress Monitoring** - View statistics and completion percentages
+- **Secure Authentication** - User system with ASP.NET Core Identity
+- **Responsive Interface** - Functional across desktop, tablet, and mobile devices
+- **Real-Time Updates** - Instant UI updates via SignalR
+
+## Screenshots
+
+### Home Page
 
 ![Home Page](docs/screenshots/home.png)
 
-### Lista de Proyectos
+### Projects List
 
 ![Projects List](docs/screenshots/projects.png)
 
-### Detalles del Proyecto con Estadísticas
+### Project Details with Statistics
 
 ![Project Details](docs/screenshots/details.png)
 
-## 🛠️ Stack Tecnológico
+## Technology Stack
 
 - **Frontend:** Blazor Server (Razor Components)
 - **Backend:** ASP.NET Core 10.0
-- **Base de Datos:** SQLite con Entity Framework Core
-- **Autenticación:** ASP.NET Core Identity
-- **UI Framework:** Bootstrap 5
+- **Database:** SQLite with Entity Framework Core 10.0
+- **Authentication:** ASP.NET Core Identity
+- **UI Framework:** Bootstrap 5.3
 - **Icons:** Bootstrap Icons
 
-## 📋 Requisitos Previos
+## Prerequisites
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) o superior
-- Editor de código (recomendado: [Visual Studio 2022](https://visualstudio.microsoft.com/) o [VS Code](https://code.visualstudio.com/))
-- Navegador web moderno (Chrome, Edge, Firefox)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) or higher
+- Code editor (recommended: [Visual Studio 2022](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/))
+- Modern web browser (Chrome, Edge, Firefox)
 
-## 🔧 Instalación y Configuración
+## Application Architecture
 
-### 1. Clonar el Repositorio
+### Authentication System
+
+The application uses ASP.NET Core Identity for user management. In development mode, email confirmation is disabled to facilitate testing. Each user has isolated access to their own projects and tasks, enforced through user ID validation in service methods.
+
+### Database Design
+
+SQLite database with three main entities:
+
+- **AspNetUsers** - User accounts managed by Identity
+- **Projects** - Academic projects with title, description, and creation date
+- **Tasks** - Individual tasks linked to projects with due dates and status
+
+Cascade delete is configured: deleting a user removes all projects, deleting a project removes all tasks.
+
+### Service Layer Pattern
+
+Business logic is separated into service classes:
+
+- **ProjectService** - Project CRUD operations and statistics calculation
+- **TaskService** - Task CRUD operations and status management
+
+All data access is performed through Entity Framework Core with async operations.
+
+## Installation and Setup
+
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/coloub/AcademicTaskManager.git
 cd AcademicTaskManager
 ```
 
-### 2. Restaurar Dependencias
+### 2. Restore Dependencies
 
 ```bash
 dotnet restore
 ```
 
-### 3. Aplicar Migraciones de Base de Datos
+### 3. Apply Database Migrations
 
 ```bash
 dotnet ef database update
 ```
 
-### 4. Ejecutar la Aplicación
+### 4. Run the Application
 
-**Opción A: Usando PowerShell Script**
+**Option A: Using PowerShell Script**
 
 ```powershell
 .\run-app.ps1
 ```
 
-**Opción B: Comando dotnet**
+**Option B: dotnet Command**
 
 ```bash
 dotnet run
 ```
 
-**Opción C: Visual Studio**
+**Option C: Visual Studio**
 
-- Abrir `Project.sln`
-- Presionar F5
+- Open `AcademicTaskManager.sln`
+- Press F5
 
-### 5. Acceder a la Aplicación
+### 5. Access the Application
 
-Abrir el navegador en: **http://localhost:5034**
+Open browser at: **http://localhost:5034**
 
-## 👤 Usuario de Prueba
+## Test Credentials
 
-Para probar la aplicación, crea un usuario con:
+To test the application, create a user with:
 
-- **Email:** `estudiante@academic.com`
-- **Contraseña:** `Test123!`
+- **Email:** `student@academic.com`
+- **Password:** `Test123!`
 
-O registra tu propio usuario en `/Account/Register`
+Or register your own user at `/Account/Register`
 
-## 📚 Documentación
+Password requirements: minimum 6 characters, must include uppercase, lowercase, number, and special character.
 
-- **[Reporte de Implementación](IMPLEMENTACION.md)** - Detalles técnicos completos de la implementación
-- **[Guía del Usuario](USER_GUIDE.md)** - Manual de uso de la aplicación
-- **[Notas del Desarrollador](DEVELOPER_NOTES.md)** - Arquitectura y guías de desarrollo
+## Documentation
 
-## 🏗️ Estructura del Proyecto
+- **[Implementation Report](IMPLEMENTACION.md)** - Complete technical implementation details
+- **[User Guide](USER_GUIDE.md)** - Application usage manual
+- **[Developer Notes](DEVELOPER_NOTES.md)** - Architecture and development guidelines
+- **[Quick Start](QUICKSTART.md)** - Rapid setup guide for developers
+
+## Project Structure
 
 ```
 AcademicTaskManager/
 ├── Components/
-│   ├── Account/          # Sistema de autenticación
-│   ├── Layout/           # Layouts y navegación
-│   └── Pages/            # Páginas de la aplicación
-│       ├── Projects/     # Gestión de proyectos
-│       └── Tasks/        # Gestión de tareas
+│   ├── Account/          # Authentication system
+│   ├── Layout/           # Layouts and navigation
+│   └── Pages/            # Application pages
+│       ├── Projects/     # Project management
+│       └── Tasks/        # Task management
 ├── Data/
 │   ├── ApplicationDbContext.cs
-│   ├── Project.cs        # Modelo de proyecto
-│   └── ProjectTask.cs    # Modelo de tarea
+│   ├── Project.cs        # Project model
+│   └── ProjectTask.cs    # Task model
 ├── Services/
-│   ├── ProjectService.cs # Lógica de negocio de proyectos
-│   └── TaskService.cs    # Lógica de negocio de tareas
-├── Migrations/           # Migraciones de EF Core
-├── wwwroot/              # Archivos estáticos
-└── Program.cs            # Configuración de la aplicación
+│   ├── ProjectService.cs # Project business logic
+│   └── TaskService.cs    # Task business logic
+├── Migrations/           # EF Core migrations
+├── wwwroot/              # Static files
+└── Program.cs            # Application configuration
 ```
 
-## 🧪 Ejecutar Tests
+## Testing
 
 ```bash
 dotnet test
 ```
 
-## 🚢 Deployment
+## Deployment
 
 ### Azure App Service
 
 ```bash
-# Publicar la aplicación
+# Publish application
 dotnet publish -c Release -o ./publish
 
-# Desplegar a Azure (requiere Azure CLI)
-az webapp up --name tu-app-name --resource-group tu-resource-group
+# Deploy to Azure (requires Azure CLI)
+az webapp up --name your-app-name --resource-group your-resource-group
 ```
 
 ### Docker
@@ -154,69 +191,69 @@ docker build -t academic-task-manager .
 docker run -p 8080:80 academic-task-manager
 ```
 
-Ver [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) para más opciones de deployment.
+See [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) for additional deployment options.
 
-## 🤝 Contribuir
+## Contributing
 
-Las contribuciones son bienvenidas. Por favor:
+Contributions are welcome. Please:
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📝 Changelog
+## Changelog
 
-### Versión 1.0.0 (10 de Febrero de 2026)
+### Version 1.0.0 (February 10, 2026)
 
-- ✨ Release inicial
-- ✅ CRUD completo de proyectos y tareas
-- ✅ Sistema de autenticación
-- ✅ Estadísticas de proyectos
-- ✅ UI responsiva
+- Initial release
+- Complete CRUD for projects and tasks
+- Authentication system
+- Project statistics
+- Responsive UI
 
-## 🐛 Reportar Bugs
+## Bug Reporting
 
-Si encuentras un bug, por favor abre un [issue](https://github.com/coloub/AcademicTaskManager/issues) con:
+If you encounter a bug, please open an [issue](https://github.com/coloub/AcademicTaskManager/issues) with:
 
-- Descripción detallada del problema
-- Pasos para reproducir
-- Comportamiento esperado vs actual
-- Screenshots si aplica
-- Información del entorno (OS, navegador, versión .NET)
+- Detailed problem description
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshots if applicable
+- Environment information (OS, browser, .NET version)
 
-## 📄 Licencia
+## License
 
-Este proyecto es software educativo desarrollado como proyecto académico.
+This project is educational software developed as an academic project for CSC325.
 
-## 👥 Autores
+## Authors
 
-**Proyecto Académico CSC325 - Spring 2026**
+**CSC325 Academic Project - Spring 2026**
 
 - Jose Mendoza - Lead Developer
 - Ana Torres - Developer
 
-**Enlaces del Proyecto:**
+**Project Links:**
 
-- GitHub: https://github.com/coloub/AcademicTaskManager
-- Trello: https://trello.com/b/6973b0d61f7cded0464bd5e6/academic-task-manager-cse-325
+- GitHub Repository: https://github.com/coloub/AcademicTaskManager
+- Trello Board: https://trello.com/b/6973b0d61f7cded0464bd5e6/academic-task-manager-cse-325
 
-## 🙏 Agradecimientos
+## Acknowledgments
 
-- [Blazor](https://blazor.net/) por el framework
-- [Bootstrap](https://getbootstrap.com/) por los estilos
-- [Bootstrap Icons](https://icons.getbootstrap.com/) por los iconos
-- Microsoft por la documentación excelente
+- Blazor team for the framework
+- Bootstrap for styling components
+- Bootstrap Icons for iconography
+- Microsoft for comprehensive.NET documentation
 
-## 📞 Soporte
+## Support
 
-¿Necesitas ayuda?
+Need help?
 
-- 📖 Lee la [Guía del Usuario](USER_GUIDE.md)
-- 💻 Consulta las [Notas del Desarrollador](DEVELOPER_NOTES.md)
-- 🐛 Reporta un [issue](https://github.com/coloub/AcademicTaskManager/issues)
+- Read the [User Guide](USER_GUIDE.md)
+- Consult [Developer Notes](DEVELOPER_NOTES.md)
+- Report an [issue](https://github.com/coloub/AcademicTaskManager/issues)
 
 ---
 
-**Desarrollado con ❤️ usando Blazor y .NET**
+**Developed with Blazor and .NET 10**

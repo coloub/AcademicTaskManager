@@ -1,73 +1,73 @@
 # Quick Start Guide - Academic Task Manager
 
-## Para Desarrolladores
+## For Developers
 
-### Ejecutar la Aplicación (Método Rápido)
+### Run the Application (Fast Method)
 
 ```powershell
 cd "D:\CSE 325 MyProjects\Project\AcademicTaskManager"
 .\run-app.ps1
 ```
 
-La aplicación se abrirá en: **http://localhost:5034**
+Application will open at: **http://localhost:5034**
 
-### Credenciales de Prueba
+### Test Credentials
 
-Para crear un usuario de prueba:
+To create a test user:
 
-1. Ir a `/Account/Register`
-2. Email: `estudiante@academic.com`
+1. Navigate to `/Account/Register`
+2. Email: `student@academic.com`
 3. Password: `Test123!`
 
-## Comandos Útiles
+## Useful Commands
 
 ```bash
-# Compilar
+# Build
 dotnet build
 
-# Ejecutar
+# Run
 dotnet run
 
-# Crear migración
-dotnet ef migrations add NombreMigration
+# Create migration
+dotnet ef migrations add MigrationName
 
-# Aplicar migraciones
+# Apply migrations
 dotnet ef database update
 
-# Eliminar BD (desarrollo)
+# Drop database (development)
 dotnet ef database drop --force
 
-# Recrear BD completa
+# Recreate complete database
 dotnet ef database drop --force && dotnet ef database update
 ```
 
-## Estructura de URLs
+## URL Structure
 
-| Ruta                        | Descripción           |
-| --------------------------- | --------------------- |
-| `/`                         | Página de inicio      |
-| `/Account/Register`         | Registro de usuario   |
-| `/Account/Login`            | Inicio de sesión      |
-| `/projects`                 | Lista de proyectos    |
-| `/projects/create`          | Crear proyecto        |
-| `/projects/{id}`            | Detalles del proyecto |
-| `/projects/edit/{id}`       | Editar proyecto       |
-| `/tasks/create/{projectId}` | Crear tarea           |
-| `/tasks/edit/{id}`          | Editar tarea          |
+| Route                       | Description       |
+| --------------------------- | ----------------- |
+| `/`                         | Home page         |
+| `/Account/Register`         | User registration |
+| `/Account/Login`            | User login        |
+| `/projects`                 | Project list      |
+| `/projects/create`          | Create project    |
+| `/projects/{id}`            | Project details   |
+| `/projects/edit/{id}`       | Edit project      |
+| `/tasks/create/{projectId}` | Create task       |
+| `/tasks/edit/{id}`          | Edit task         |
 
-## Archivos Clave
+## Key Files
 
 ```
-Program.cs                    # Configuración de servicios y middleware
-appsettings.json              # Configuración (connection string)
-Components/Pages/Projects/    # Páginas de proyectos
-Components/Pages/Tasks/       # Páginas de tareas
-Data/ApplicationDbContext.cs  # Contexto de EF Core
-Services/ProjectService.cs    # Lógica de proyectos
-Services/TaskService.cs       # Lógica de tareas
+Program.cs                    # Service and middleware configuration
+appsettings.json              # Configuration (connection string)
+Components/Pages/Projects/    # Project pages
+Components/Pages/Tasks/       # Task pages
+Data/ApplicationDbContext.cs  # EF Core context
+Services/ProjectService.cs    # Project logic
+Services/TaskService.cs       # Task logic
 ```
 
-## Solución de Problemas Rápida
+## Quick Troubleshooting
 
 **Error: "no such table: AspNetUsers"**
 
@@ -75,44 +75,44 @@ Services/TaskService.cs       # Lógica de tareas
 dotnet ef database update
 ```
 
-**Error: Migraciones pendientes**
+**Error: Pending migrations**
 
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-**Resetear BD completa**
+**Reset complete database**
 
 ```bash
 Remove-Item Data\app.db* -Force
 dotnet ef database update
 ```
 
-**La aplicación no inicia**
+**Application won't start**
 
-- Verificar que el puerto 5034 no esté en uso
-- Compilar primero: `dotnet build`
-- Ver errores: `dotnet run --verbosity detailed`
+- Verify port 5034 is not in use
+- Build first: `dotnet build`
+- View errors: `dotnet run --verbosity detailed`
 
-## Testing Rápido
+## Quick Testing
 
-1. ✅ Registrar usuario
-2. ✅ Crear proyecto
-3. ✅ Crear 2-3 tareas
-4. ✅ Marcar una tarea como completada
-5. ✅ Verificar estadísticas
-6. ✅ Editar proyecto
-7. ✅ Eliminar tarea
-8. ✅ Cerrar sesión
+1. Register user
+2. Create project
+3. Create 2-3 tasks
+4. Mark one task as completed
+5. Verify statistics
+6. Edit project
+7. Delete task
+8. Logout
 
-## Documentación Completa
+## Complete Documentation
 
-- [README.md](README.md) - Vista general
-- [IMPLEMENTACION.md](IMPLEMENTACION.md) - Reporte técnico completo
-- [USER_GUIDE.md](USER_GUIDE.md) - Guía del usuario
-- [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) - Arquitectura y desarrollo
+- [README.md](README.md) - Overview
+- [IMPLEMENTACION.md](IMPLEMENTACION.md) - Complete technical report
+- [USER_GUIDE.md](USER_GUIDE.md) - User guide
+- [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) - Architecture and development
 
 ---
 
-**¿Necesitas más ayuda?** Consulta la documentación completa en los archivos .md
+**Need more help?** Consult the complete documentation in .md files

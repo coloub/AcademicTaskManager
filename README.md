@@ -1,10 +1,5 @@
 # Academic Task Manager
 
-[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
-[![Blazor](https://img.shields.io/badge/Blazor-Server-512BD4)](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
-[![Entity Framework](https://img.shields.io/badge/EF%20Core-10.0-512BD4)](https://docs.microsoft.com/ef/)
-[![SQLite](https://img.shields.io/badge/SQLite-3-003B57)](https://www.sqlite.org/)
-
 ## Course Context
 
 **CSC325 – .NET Software Development**  
@@ -148,7 +143,6 @@ The application is deployed on Render with the following configuration:
 ### Repository
 
 - **GitHub:** https://github.com/coloub/AcademicTaskManager
-- **Issues:** https://github.com/coloub/AcademicTaskManager/issues
 
 ### Project Board
 

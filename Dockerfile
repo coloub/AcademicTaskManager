@@ -30,6 +30,12 @@ RUN dotnet publish "AcademicTaskManager.csproj" \
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
+# Install PostgreSQL client libraries (required by Npgsql)
+USER root
+RUN apt-get update && apt-get install -y \
+    libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user for security
 RUN useradd -m -u 1001 appuser && chown -R appuser /app
 USER appuser

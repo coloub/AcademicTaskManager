@@ -124,31 +124,149 @@ For testing purposes, create an account with:
 
 Or register a new account at `/Account/Register`
 
-## Deployment Overview (Render)
-////////////////
-The application is production-ready and configured for deployment on Render.com.
+## Deployment on Render.com (Docker)
 
-**Quick Deploy:**
-////////////////
-- **Platform:** Render Web Service
-- **Build Command:** `dotnet publish -c Release -o out`
-- **Start Command:** `dotnet out/AcademicTaskManager.dll`
-- **Environment:** .NET 10 runtime
-///////////
-- **Database Options:** SQLite (persistent disk) or PostgreSQL (managed database)
-///////////
-**Deployed Application URL:** _(To be added after deployment)_
-//////////////////
-**📘 Complete Deployment Guide:** See [DEPLOYMENT_RENDER.md](DEPLOYMENT_RENDER.md) for detailed step-by-step instructions including:
+The application is production-ready with Docker support and auto-migration for PostgreSQL.
 
-- Environment configuration
-- Database setup (SQLite or PostgreSQL)
-- Environment variables
-- Migration execution
-- Troubleshooting
+### Prerequisites
 
-**Note:** The application automatically detects the database provider based on the connection string. Supports SQLite (development), PostgreSQL, and SQL Server.
-////////////////////
+1. **Render.com Account**: [Sign up](https://render.com)
+2. **PostgreSQL Database**: Create a managed PostgreSQL instance on Render
+3. **GitHub Repository**: Code must be in a Git repository
+
+### Step-by-Step Deployment
+
+#### 1. Create PostgreSQL Database
+
+1. In Render Dashboard, click **"New +"** → **"PostgreSQL"**
+2. Name: `academictaskmanager-db`
+3. Database: `academic_db`
+4. User: `academic_user`
+5. Region: Choose closest to your users
+6. Plan: Free (for testing) or Starter (for production)
+7. Click **"Create Database"**
+8. **Copy the "Internal Database URL"** (starts with `postgresql://`)
+
+#### 2. Create Web Service (Docker)
+
+1. Click **"New +"** → **"Web Service"**
+2. Connect your GitHub repository
+3. Configure:
+   - **Name**: `academictaskmanager`
+   - **Environment**: `Docker`
+   - **Region**: Same as database
+   - **Branch**: `main`
+   - **Dockerfile Path**: `Dockerfile` (auto-detected)
+   - **Docker Command**: Leave empty (uses ENTRYPOINT)
+
+#### 3. Configure Environment Variables
+
+In **"Environment"** section, add:
+
+```bash
+# Required - PostgreSQL connection from Step 1
+ConnectionStrings__DefaultConnection=<PASTE_INTERNAL_DATABASE_URL_HERE>
+
+# Optional - Production environment (auto-set)
+ASPNETCORE_ENVIRONMENT=Production
+```
+
+**Example:**
+```
+ConnectionStrings__DefaultConnection=postgresql://academic_user:password@dpg-xxx.oregon-postgres.render.com/academic_db
+```
+
+#### 4. Deploy
+
+1. Click **"Create Web Service"**
+2. Render will:
+   - Build Docker image
+   - Apply database migrations automatically ✅
+   - Start the application
+3. Wait 3-5 minutes for first deployment
+
+### Deployment Status
+
+- **Live URL**: https://academictaskmanager.onrender.com
+- **Auto-Migration**: ✅ Enabled (runs on startup)
+- **Database**: PostgreSQL (Render managed)
+- **Environment**: Production
+
+### Troubleshooting
+
+#### Error: "Format of the initialization string does not conform"
+**Cause**: Missing or invalid `ConnectionStrings__DefaultConnection`  
+**Fix**: 
+1. Go to Render Dashboard → Your Web Service → "Environment"
+2. Verify the PostgreSQL connection string is set correctly
+3. Must start with `postgresql://` or `Host=`
+4. Click "Save Changes" and redeploy
+
+#### Error: "relation AspNetUsers does not exist"
+**Cause**: Migrations not applied  
+**Fix**: Application now auto-applies migrations. If still failing:
+1. Check logs for migration errors
+2. Verify PostgreSQL database is accessible
+3. Ensure connection string has correct permissions
+
+#### Error: "libgssapi_krb5.so.2: cannot open shared object"
+**Fix**: Already resolved in updated Dockerfile (installs required libraries)
+
+#### Check Logs
+```bash
+# In Render Dashboard
+Web Service → Logs → View real-time logs
+```
+
+### Manual Migration (if needed)
+
+If auto-migration fails, run manually via Render Shell:
+
+1. Go to Web Service → "Shell"
+2. Run:
+```bash
+dotnet ef database update --no-build
+```
+
+### Environment Variables Reference
+
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `ConnectionStrings__DefaultConnection` | ✅ Yes | PostgreSQL URL from Render | `postgresql://user:pass@host/db` |
+| `ASPNETCORE_ENVIRONMENT` | No | Runtime environment | `Production` (default) |
+| `PORT` | No | Auto-set by Render | `10000` |
+
+### Local Testing with Docker
+
+```bash
+# Build image
+docker build -t academictaskmanager .
+
+# Run with SQLite (development)
+docker run -p 5000:5000 \
+  -e PORT=5000 \
+  -e ConnectionStrings__DefaultConnection="DataSource=app.db" \
+  academictaskmanager
+
+# Run with PostgreSQL (production simulation)
+docker run -p 5000:5000 \
+  -e PORT=5000 \
+  -e ASPNETCORE_ENVIRONMENT=Production \
+  -e ConnectionStrings__DefaultConnection="Host=localhost;Database=academic;Username=postgres;Password=pass" \
+  academictaskmanager
+```
+
+### Post-Deployment Checklist
+
+- ✅ Application accessible at Render URL
+- ✅ Can register new user account
+- ✅ Can create projects and tasks
+- ✅ Data persists after server restart
+- ✅ No migration errors in logs
+
+---
+
+**📘 Advanced Configuration:** See [DEPLOYMENT_RENDER.md](DEPLOYMENT_RENDER.md) for additional details
 ## Project Management
 
 ### Repository

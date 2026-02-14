@@ -8,6 +8,10 @@ using AcademicTaskManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure web host for Render.com (PORT environment variable support)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -26,7 +30,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Detect database provider based on environment or connection string
 var isDevelopment = builder.Environment.IsDevelopment();
-var usePostgreSql = connectionString.Contains("Host=") || connectionString.Contains("PostgreSQL");
+var usePostgreSql = connectionString.Contains("Host=") || connectionString.StartsWith("postgresql://") || connectionString.Contains("Username=");
 var useSqlServer = connectionString.Contains("Server=") && !connectionString.Contains("Host=");
 
 if (usePostgreSql)

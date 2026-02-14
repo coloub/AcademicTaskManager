@@ -32,8 +32,8 @@ publish/
 .env.local
 .env.production
 
-## Production configuration
-appsettings.Production.json
+## Development configuration
+appsettings.Development.json
 
 ## Node (if needed)
 node_modules/

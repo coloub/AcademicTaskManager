@@ -1,0 +1,86 @@
+# .dockerignore - Exclude files from Docker build context
+# This reduces image size and build time
+
+# Build outputs
+bin/
+obj/
+out/
+publish/
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# Development database files
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+Data/app.db
+
+# Environment and secrets
+.env
+.env.*
+*.pfx
+*.p12
+
+# Development settings (use Production settings in container)
+appsettings.Development.json
+launchSettings.json
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.DS_Store
+Thumbs.db
+
+# Node modules (if any frontend tooling)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+logs/
+error.log
+output.log
+startup.log
+
+# Documentation and non-essential files
+README.md
+DEPLOYMENT_RENDER.md
+*.md
+LICENSE
+
+# Test projects
+*Tests/
+*.Tests/
+
+# Package restore cache
+.nuget/
+packages/
+
+# Build scripts
+*.ps1
+*.sh
+
+# Docker files (don't copy into image)
+Dockerfile
+.dockerignore
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~

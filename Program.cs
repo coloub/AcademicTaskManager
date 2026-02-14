@@ -10,7 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure web host for Render.com (PORT environment variable support)
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+var isDevelopmentEnv = builder.Environment.IsDevelopment();
+var host = isDevelopmentEnv ? "localhost" : "0.0.0.0";
+builder.WebHost.UseUrls($"http://{host}:{port}");
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

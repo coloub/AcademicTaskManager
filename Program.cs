@@ -5,7 +5,6 @@ using AcademicTaskManager.Components;
 using AcademicTaskManager.Components.Account;
 using AcademicTaskManager.Data;
 using AcademicTaskManager.Services;
-using ASP.D_.CSE_325_MyProjects.Project.AcademicTaskManager.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

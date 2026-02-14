@@ -36,11 +36,11 @@ builder.Services.AddAuthentication(options =>
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Use SQLite as default if no connection string is provided (Azure App Service default)
 if (string.IsNullOrWhiteSpace(connectionString))
 {
-    throw new InvalidOperationException(
-        "Connection string 'DefaultConnection' not found or is empty. " +
-        "Please set the environment variable: ConnectionStrings__DefaultConnection");
+    connectionString = "DataSource=Data/app.db;Cache=Shared";
+    builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
 }
 
 // Detect database provider based on environment or connection string
@@ -85,7 +85,7 @@ builder.Services.AddScoped<TaskService>();
 
 var app = builder.Build();
 
-// Auto-apply migrations in production (Render.com PostgreSQL)
+// Auto-apply migrations in production (Azure, Render, etc.)
 if (!app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
@@ -95,6 +95,14 @@ if (!app.Environment.IsDevelopment())
         {
             var context = services.GetRequiredService<ApplicationDbContext>();
             var logger = services.GetRequiredService<ILogger<Program>>();
+
+            // Ensure Data directory exists for SQLite
+            var dataDir = Path.Combine(app.Environment.ContentRootPath, "Data");
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(dataDir);
+                logger.LogInformation("Created Data directory for SQLite database.");
+            }
 
             logger.LogInformation("Applying database migrations...");
             context.Database.Migrate();

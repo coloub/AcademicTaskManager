@@ -8,11 +8,17 @@ using AcademicTaskManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure web host for Render.com (PORT environment variable support)
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-var isDevelopmentEnv = builder.Environment.IsDevelopment();
-var host = isDevelopmentEnv ? "localhost" : "0.0.0.0";
-builder.WebHost.UseUrls($"http://{host}:{port}");
+// Configure web host for cloud deployment (Render, Azure, etc.)
+// Azure App Service configures ports automatically
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    // Render.com or similar services that use PORT env variable
+    var isDevelopmentEnv = builder.Environment.IsDevelopment();
+    var host = isDevelopmentEnv ? "localhost" : "0.0.0.0";
+    builder.WebHost.UseUrls($"http://{host}:{port}");
+}
+// Azure App Service: No need to set URL, it's configured automatically
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

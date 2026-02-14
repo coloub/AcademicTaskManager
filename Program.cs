@@ -23,8 +23,31 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+
+// Detect database provider based on environment or connection string
+var isDevelopment = builder.Environment.IsDevelopment();
+var usePostgreSql = connectionString.Contains("Host=") || connectionString.Contains("PostgreSQL");
+var useSqlServer = connectionString.Contains("Server=") && !connectionString.Contains("Host=");
+
+if (usePostgreSql)
+{
+    // Production: PostgreSQL (Render managed database)
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connectionString));
+}
+else if (useSqlServer)
+{
+    // Production: SQL Server (alternative)
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
+else
+{
+    // Development: SQLite (default)
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlite(connectionString));
+}
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>

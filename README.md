@@ -125,19 +125,30 @@ For testing purposes, create an account with:
 Or register a new account at `/Account/Register`
 
 ## Deployment Overview (Render)
+////////////////
+The application is production-ready and configured for deployment on Render.com.
 
-The application is deployed on Render with the following configuration:
-
+**Quick Deploy:**
+////////////////
 - **Platform:** Render Web Service
 - **Build Command:** `dotnet publish -c Release -o out`
 - **Start Command:** `dotnet out/AcademicTaskManager.dll`
 - **Environment:** .NET 10 runtime
-- **Database:** SQLite (persistent volume recommended for production)
-
+///////////
+- **Database Options:** SQLite (persistent disk) or PostgreSQL (managed database)
+///////////
 **Deployed Application URL:** _(To be added after deployment)_
+//////////////////
+**📘 Complete Deployment Guide:** See [DEPLOYMENT_RENDER.md](DEPLOYMENT_RENDER.md) for detailed step-by-step instructions including:
 
-**Note:** For production deployment, consider migrating from SQLite to PostgreSQL or SQL Server for improved scalability and concurrent user support.
+- Environment configuration
+- Database setup (SQLite or PostgreSQL)
+- Environment variables
+- Migration execution
+- Troubleshooting
 
+**Note:** The application automatically detects the database provider based on the connection string. Supports SQLite (development), PostgreSQL, and SQL Server.
+////////////////////
 ## Project Management
 
 ### Repository

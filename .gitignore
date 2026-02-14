@@ -12,6 +12,9 @@ publish/
 
 ## Logs
 *.log
+error.log
+output.log
+startup.log
 
 ## User-specific files
 *.suo
@@ -56,3 +59,7 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+
+## Deploy files
+deploy.zip
+*.zip

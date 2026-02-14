@@ -34,12 +34,17 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
+// Detect if running in Azure App Service
+var isAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME"));
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Use SQLite as default if no connection string is provided (Azure App Service default)
-if (string.IsNullOrWhiteSpace(connectionString))
+// Use SQLite as default if no connection string is provided
+if (string.IsNullOrWhiteSpace(connectionString) || connectionString == "OVERRIDE_WITH_ENVIRONMENT_VARIABLE")
 {
-    connectionString = "DataSource=Data/app.db;Cache=Shared";
+    // For Azure App Service, use /home/data which is persistent across restarts
+    var dbPath = isAzure ? "/home/data/app.db" : "Data/app.db";
+    connectionString = $"DataSource={dbPath};Cache=Shared";
     builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
 }
 
@@ -97,13 +102,18 @@ if (!app.Environment.IsDevelopment())
             var logger = services.GetRequiredService<ILogger<Program>>();
 
             // Ensure Data directory exists for SQLite
-            var dataDir = Path.Combine(app.Environment.ContentRootPath, "Data");
+            // For Azure App Service, use /home/data which is persistent
+            var dataDir = isAzure
+                ? "/home/data"
+                : Path.Combine(app.Environment.ContentRootPath, "Data");
+
             if (!Directory.Exists(dataDir))
             {
                 Directory.CreateDirectory(dataDir);
-                logger.LogInformation("Created Data directory for SQLite database.");
+                logger.LogInformation($"Created Data directory at: {dataDir}");
             }
 
+            logger.LogInformation($"Database path: {dataDir}");
             logger.LogInformation("Applying database migrations...");
             context.Database.Migrate();
             logger.LogInformation("Database migrations applied successfully.");
@@ -128,7 +138,13 @@ else
 }
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
+
+// Azure App Service handles HTTPS at the load balancer level
+// Only redirect if not running in Azure
+if (!isAzure)
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAntiforgery();
 

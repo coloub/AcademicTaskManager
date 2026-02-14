@@ -87,7 +87,7 @@ if (!app.Environment.IsDevelopment())
         {
             var context = services.GetRequiredService<ApplicationDbContext>();
             var logger = services.GetRequiredService<ILogger<Program>>();
-            
+
             logger.LogInformation("Applying database migrations...");
             context.Database.Migrate();
             logger.LogInformation("Database migrations applied successfully.");

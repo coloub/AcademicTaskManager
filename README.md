@@ -172,6 +172,7 @@ ASPNETCORE_ENVIRONMENT=Production
 ```
 
 **Example:**
+
 ```
 ConnectionStrings__DefaultConnection=postgresql://academic_user:password@dpg-xxx.oregon-postgres.render.com/academic_db
 ```
@@ -195,24 +196,30 @@ ConnectionStrings__DefaultConnection=postgresql://academic_user:password@dpg-xxx
 ### Troubleshooting
 
 #### Error: "Format of the initialization string does not conform"
+
 **Cause**: Missing or invalid `ConnectionStrings__DefaultConnection`  
-**Fix**: 
+**Fix**:
+
 1. Go to Render Dashboard → Your Web Service → "Environment"
 2. Verify the PostgreSQL connection string is set correctly
 3. Must start with `postgresql://` or `Host=`
 4. Click "Save Changes" and redeploy
 
 #### Error: "relation AspNetUsers does not exist"
+
 **Cause**: Migrations not applied  
 **Fix**: Application now auto-applies migrations. If still failing:
+
 1. Check logs for migration errors
 2. Verify PostgreSQL database is accessible
 3. Ensure connection string has correct permissions
 
 #### Error: "libgssapi_krb5.so.2: cannot open shared object"
+
 **Fix**: Already resolved in updated Dockerfile (installs required libraries)
 
 #### Check Logs
+
 ```bash
 # In Render Dashboard
 Web Service → Logs → View real-time logs
@@ -224,17 +231,18 @@ If auto-migration fails, run manually via Render Shell:
 
 1. Go to Web Service → "Shell"
 2. Run:
+
 ```bash
 dotnet ef database update --no-build
 ```
 
 ### Environment Variables Reference
 
-| Variable | Required | Description | Example |
-|----------|----------|-------------|---------|
-| `ConnectionStrings__DefaultConnection` | ✅ Yes | PostgreSQL URL from Render | `postgresql://user:pass@host/db` |
-| `ASPNETCORE_ENVIRONMENT` | No | Runtime environment | `Production` (default) |
-| `PORT` | No | Auto-set by Render | `10000` |
+| Variable                               | Required | Description                | Example                          |
+| -------------------------------------- | -------- | -------------------------- | -------------------------------- |
+| `ConnectionStrings__DefaultConnection` | ✅ Yes   | PostgreSQL URL from Render | `postgresql://user:pass@host/db` |
+| `ASPNETCORE_ENVIRONMENT`               | No       | Runtime environment        | `Production` (default)           |
+| `PORT`                                 | No       | Auto-set by Render         | `10000`                          |
 
 ### Local Testing with Docker
 
@@ -267,6 +275,7 @@ docker run -p 5000:5000 \
 ---
 
 **📘 Advanced Configuration:** See [DEPLOYMENT_RENDER.md](DEPLOYMENT_RENDER.md) for additional details
+
 ## Project Management
 
 ### Repository
